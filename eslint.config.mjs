@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import codeComplete from "eslint-plugin-code-complete";
 import deMorgan from "eslint-plugin-de-morgan";
 import eslint from "@eslint/js";
 import eslintPluginUnicorn from "eslint-plugin-unicorn";
@@ -33,7 +32,6 @@ export default [
       },
     },
     plugins: {
-      "code-complete": codeComplete,
       "import-newlines": importNewlines,
       "sort-properties": sortPropertiesPlugin,
     },
@@ -97,15 +95,13 @@ export default [
 
       "array-callback-return": "error",
 
-      "code-complete/no-boolean-params": "warn",
-
       "curly": ["warn", "all"],
       "eqeqeq": ["error", "always"],
       "import-newlines/enforce": ["warn", {
         items: 1,
       }],
       "max-params": ["error", {
-        max: 2,
+        max: 3,
       }],
       "no-else-return": ["error", {
         allowElseIf: false,
