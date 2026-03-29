@@ -106,16 +106,7 @@ export default [
       "no-else-return": ["error", {
         allowElseIf: false,
       }],
-      "no-magic-numbers": ["warn", {
-        enforceConst: true,
-        ignore: [-1, 0, 1],
-        ignoreArrayIndexes: true,
-        ignoreClassFieldInitialValues: true,
-        ignoreDefaultValues: true,
-        ignoreEnums: true,
-        ignoreNumericLiteralTypes: true,
-        ignoreTypeIndexes: true,
-      }],
+      "no-magic-numbers": "off",
       "no-nested-ternary": "warn",
       "no-param-reassign": ["warn", {
         props: true,
