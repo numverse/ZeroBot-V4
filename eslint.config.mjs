@@ -100,9 +100,7 @@ export default [
       "import-newlines/enforce": ["warn", {
         items: 1,
       }],
-      "max-params": ["error", {
-        max: 3,
-      }],
+      "max-params": "off",
       "no-else-return": ["error", {
         allowElseIf: false,
       }],
@@ -130,19 +128,19 @@ export default [
         natural: true,
       }],
       "sort-properties/sort-interface": ["warn", {
-        allowLineSeparatedGroups: false,
+        allowLineSeparatedGroups: true,
         caseSensitive: false,
       }],
       "sort-properties/sort-object-destructing": ["warn", {
-        allowLineSeparatedGroups: false,
+        allowLineSeparatedGroups: true,
         caseSensitive: false,
       }],
       "sort-properties/sort-object-expression": ["warn", {
-        allowLineSeparatedGroups: false,
+        allowLineSeparatedGroups: true,
         caseSensitive: false,
       }],
       "sort-properties/sort-type-literal": ["warn", {
-        allowLineSeparatedGroups: false,
+        allowLineSeparatedGroups: true,
         caseSensitive: false,
       }],
 
