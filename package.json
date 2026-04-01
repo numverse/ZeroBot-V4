@@ -1,5 +1,6 @@
 {
   "name": "zerobot-v4",
+  "version": "4.0.0-dev",
   "module": "src/index.ts",
   "type": "module",
   "private": true,
