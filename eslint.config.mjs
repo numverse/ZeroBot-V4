@@ -120,6 +120,7 @@ export default [
       "prefer-template": "warn",
       "preserve-caught-error": "warn",
       "sort-imports": ["warn", {
+        allowSeparatedGroups: true,
         ignoreCase: true,
       }],
       "sort-keys": ["warn", "asc", {
