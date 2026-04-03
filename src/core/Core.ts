@@ -28,7 +28,8 @@ interface CoreOptions {
 type EventName = keyof ClientEvents;
 type EventListener<T extends EventName> = (...args: ClientEvents[T]) => void;
 
-export default class Core extends Client {
+export default class Core {
+  readonly client: Client;
   readonly services: Collection<string, BotService> = new Collection();
   readonly events: Collection<EventName, Set<BotEvent>> = new Collection();
   private readonly listenerList: Collection<EventName, (...args: unknown[]) => void> = new Collection();
@@ -38,7 +39,7 @@ export default class Core extends Client {
   };
 
   constructor(coreOptions: CoreOptions) {
-    super(coreOptions.options);
+    this.client = new Client(coreOptions.options);
 
     if (coreOptions.logger) {
       this.logger = coreOptions.logger;
@@ -66,7 +67,7 @@ export default class Core extends Client {
       this.logger.info(`Found command "${command.data.name}", but command registration is not implemented yet.`);
     }
 
-    this.login(coreOptions.token).then(() => {
+    this.client.login(coreOptions.token).then(() => {
       this.logger.info("Successfully logged in.");
     }).catch((error) => {
       this.logger.error("Failed to log in:", error);
@@ -92,7 +93,7 @@ export default class Core extends Client {
     this.events.set(botEvent.name, new Set<BotEvent>([botEvent]));
 
     const listener = this.createListener(botEvent.name);
-    this.on(botEvent.name, listener);
+    this.client.on(botEvent.name, listener);
 
     this.listenerList.set(botEvent.name, listener as unknown as (...args: unknown[]) => void);
   }
