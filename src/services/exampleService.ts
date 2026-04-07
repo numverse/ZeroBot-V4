@@ -5,12 +5,12 @@ export class ExampleService implements BotService {
   name = "ExampleService";
   version = "1.0.0";
 
-  start(): Promise<void> {
+  start() {
     // throw new Error("Method not implemented.");
     return Promise.resolve();
   }
 
-  stop?(): Promise<void> {
+  stop?() {
     // throw new Error("Method not implemented.");
     return Promise.resolve();
   }
