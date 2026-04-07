@@ -32,6 +32,7 @@ export default class Core {
   readonly client: Client;
   readonly services: Collection<string, BotService> = new Collection();
   readonly events: Collection<EventName, Set<BotEvent>> = new Collection();
+  readonly commands: Collection<string, BotCommand> = new Collection();
   private readonly listenerList: Collection<EventName, (...args: unknown[]) => void> = new Collection();
   readonly logger: BotLogger = defaultLogger;
   readonly utils = {
@@ -47,35 +48,43 @@ export default class Core {
       this.logger.info("No logger provided, using default logger.");
     }
 
-    for (const Service of coreOptions.services ?? []) {
+    Promise.allSettled((coreOptions.services ?? []).map(async (Service) => {
       const service = new Service();
-
-      service.start().then(() => {
-        this.logger.info(`Service "${service.name}" started successfully.`);
-      }).catch((error) => {
-        this.logger.error(`Failed to start service "${service.name}":`, error);
-      });
+      await service.start();
       this.services.set(service.name, service);
-    }
+    })).then((serviceResults) => {
+      for (const result of serviceResults) {
+        if (result.status === "rejected") {
+          this.logger.error("Error starting service:", result.reason);
+        }
+      }
+      for (const botEvent of coreOptions.events ?? []) {
+        this.addEvent(botEvent);
+      }
 
-    for (const botEvent of coreOptions.events ?? []) {
-      this.addEvent(botEvent);
-    }
+      for (const Command of coreOptions.commands ?? []) {
+        const command = new Command();
+        this.commands.set(command.data.name, command);
+      }
+      this.logger.info(`Loaded ${this.commands.size} commands, ${this.events.size} events, and ${this.services.size} services.`);
 
-    for (const Command of coreOptions.commands ?? []) {
-      const command = new Command();
-      this.logger.info(`Found command "${command.data.name}", but command registration is not implemented yet.`);
-    }
-
-    this.client.login(coreOptions.token).then(() => {
-      this.logger.info("Successfully logged in.");
+      this.client.login(coreOptions.token).then(() => {
+        this.logger.info("Successfully logged in.");
+      }).catch((error) => {
+        this.logger.error("Failed to log in:", error);
+      });
     }).catch((error) => {
-      this.logger.error("Failed to log in:", error);
+      this.logger.error("Error initializing services:", error);
     });
 
     process.on("uncaughtException", (error) => {
       this.logger.error("uncaughtException: ", error.message);
       this.logger.error(error.stack ?? "No stack trace available");
+    });
+
+    process.on("unhandledRejection", (reason, promise) => {
+      this.logger.error("unhandledRejection: ", reason);
+      this.logger.error("Promise: ", promise);
     });
   }
 
