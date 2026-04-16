@@ -5,5 +5,5 @@ export interface BotEvent<T extends keyof ClientEvents = keyof ClientEvents> {
   name: T;
   once?: boolean;
 
-  execute(client: Core, ...args: ClientEvents[T]): Promise<void> | void;
+  execute(core: Core, ...args: ClientEvents[T]): Promise<void> | void;
 }
