@@ -1,4 +1,5 @@
 import {
+  type ApplicationCommandData,
   Client,
   type ClientEvents,
   type ClientOptions,
@@ -70,6 +71,10 @@ export default class Core {
 
       this.client.login(coreOptions.token).then(() => {
         this.logger.info("Successfully logged in.");
+
+        this.autoUploadCommands().catch((error) => {
+          this.logger.error("Failed to auto-upload commands:", error);
+        });
       }).catch((error) => {
         this.logger.error("Failed to log in:", error);
       });
@@ -124,5 +129,55 @@ export default class Core {
         }
       })();
     };
+  }
+
+  private async autoUploadCommands(): Promise<void> {
+    const commandData: Record<string, ApplicationCommandData[]> = {
+      global: [],
+    };
+
+    this.commands.each((command) => {
+      // if (command.options?.guilds?.length) {
+      //   for (const guildId of command.options.guilds) {
+      //     if (!commandData[guildId]) {
+      //       commandData[guildId] = [];
+      //     }
+      //     commandData[guildId].push(command.data);
+      //   }
+      // } else {
+      commandData["global"]!.push(command.data);
+      // }
+    });
+
+    const commands = await this.client.application?.commands.fetch();
+    if (!commands) {
+      throw new Error("Failed to fetch existing commands from Discord.");
+    }
+
+    for (const [key, value] of Object.entries(commandData)) {
+      if (key === "global") {
+        this.client.application?.commands.set(value).then((uploads) => {
+          const changed = [
+            ...uploads.filter((upload) => {
+              return !commands.has(upload.id);
+            }).map((cmd) => {
+              return `+ ${cmd.name}`;
+            }),
+            ...commands.filter((upload) => {
+              return !uploads.has(upload.id);
+            }).map((cmd) => {
+              return `- ${cmd.name}`;
+            }),
+          ];
+          if (changed.length > 0) {
+            this.logger.info(`Auto-Uploaded global commands: \n${changed.join("\n")}`);
+          }
+        }).catch((error) => {
+          this.logger.error("Failed to auto-upload global commands:", error);
+        });
+      } else {
+        // this.client.application?.commands.set(value, key);
+      }
+    }
   }
 }
