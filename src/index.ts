@@ -1,10 +1,19 @@
+import "dotenv/config";
 import {
   type Shard,
   ShardingManager,
 } from "discord.js";
+import path from "node:path";
 
-const manager = new ShardingManager(`${import.meta.dir}/bot.ts`, {
+const isDev = import.meta.url.endsWith(".ts");
+const botFileName = isDev ? "bot.ts" : "bot.js";
+
+const botPath = path.join(import.meta.dirname, botFileName);
+
+const manager = new ShardingManager(botPath, {
+  execArgv: isDev ? ["--import", "tsx"] : [],
   mode: "process",
+  token: process.env.DISCORD_TOKEN,
   totalShards: "auto",
 });
 

@@ -4,7 +4,6 @@ import eslint from "@eslint/js";
 import eslintPluginUnicorn from "eslint-plugin-unicorn";
 import globals from "globals";
 import importNewlines from "eslint-plugin-import-newlines";
-import sortPropertiesPlugin from "eslint-plugin-sort-properties";
 import stylistic from "@stylistic/eslint-plugin";
 import tseslint from "typescript-eslint";
 
@@ -18,6 +17,7 @@ export default [
   }),
   eslintPluginUnicorn.configs.recommended,
   deMorgan.configs.recommended,
+  ...tseslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
   {
     files: ["**/*.{ts,mjs}"],
@@ -33,7 +33,6 @@ export default [
     },
     plugins: {
       "import-newlines": importNewlines,
-      "sort-properties": sortPropertiesPlugin,
     },
     rules: {
       "@stylistic/arrow-parens": ["warn", "always"],
@@ -127,22 +126,6 @@ export default [
         allowLineSeparatedGroups: true,
         caseSensitive: false,
         natural: true,
-      }],
-      "sort-properties/sort-interface": ["warn", {
-        allowLineSeparatedGroups: true,
-        caseSensitive: false,
-      }],
-      "sort-properties/sort-object-destructing": ["warn", {
-        allowLineSeparatedGroups: true,
-        caseSensitive: false,
-      }],
-      "sort-properties/sort-object-expression": ["warn", {
-        allowLineSeparatedGroups: true,
-        caseSensitive: false,
-      }],
-      "sort-properties/sort-type-literal": ["warn", {
-        allowLineSeparatedGroups: true,
-        caseSensitive: false,
       }],
 
       "unicorn/filename-case": [

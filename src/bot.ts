@@ -1,14 +1,18 @@
+import "dotenv/config";
 import {
   ActivityType,
   GatewayIntentBits,
   Options,
 } from "discord.js";
 
-import Core from "@/core/Core";
+import Core from "~/core/Core.js";
 
-import { errorEvent } from "@/events/error";
-import { ExampleCommand } from "@/commands/exampleCommand";
-import { ExampleService } from "@/services/exampleService";
+import { errorEvent } from "~/events/error";
+import { interactionCreateEvent } from "~/events/interactionCreate";
+
+import { ExampleCommand } from "~/commands/exampleCommand";
+
+import { ExampleService } from "~/services/exampleService";
 
 new Core({
   options: {
@@ -38,7 +42,7 @@ new Core({
   },
 
   commands: [ExampleCommand],
-  events: [errorEvent],
+  events: [errorEvent, interactionCreateEvent],
   services: [ExampleService],
   token: process.env.DISCORD_TOKEN!,
 });

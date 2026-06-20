@@ -1,4 +1,4 @@
-import { type BotLogger } from "@/core/types/BotLogger";
+import { type BotLogger } from "~/core/types/BotLogger";
 
 export const defaultLogger: BotLogger = {
   error(message, error) {

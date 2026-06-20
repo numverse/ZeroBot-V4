@@ -1,4 +1,4 @@
-import { type BotService } from "@/core/types/BotService";
+import { type BotService } from "~/core/types/BotService";
 
 export class ExampleService implements BotService {
   description = "An example service that does nothing.";

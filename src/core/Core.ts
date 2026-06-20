@@ -6,13 +6,13 @@ import {
   Collection,
 } from "discord.js";
 
-import { type BotCommand } from "@/core/types/BotCommand";
-import { type BotEvent } from "@/core/types/BotEvent";
-import { type BotLogger } from "@/core/types/BotLogger";
-import { type BotService } from "@/core/types/BotService";
+import { type BotCommand } from "~/core/types/BotCommand";
+import { type BotEvent } from "~/core/types/BotEvent";
+import { type BotLogger } from "~/core/types/BotLogger";
+import { type BotService } from "~/core/types/BotService";
 
-import * as math from "@/core/utils/math";
-import { defaultLogger } from "@/core/utils/defaultLogger";
+import * as math from "~/core/utils/math";
+import { defaultLogger } from "~/core/utils/defaultLogger";
 
 type CommandConstructor<T extends BotCommand = BotCommand> = new () => T;
 type ServiceConstructor<T extends BotService = BotService> = new () => T;
@@ -145,7 +145,7 @@ export default class Core {
       //     commandData[guildId].push(command.data);
       //   }
       // } else {
-      commandData["global"]!.push(command.data);
+      commandData["global"].push(command.data);
       // }
     });
 

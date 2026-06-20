@@ -1,4 +1,4 @@
-import { defineEvent } from "@/core/helpers/defineEvent";
+import { defineEvent } from "~/core/helpers/defineEvent";
 import { Events } from "discord.js";
 
 export const errorEvent = defineEvent({

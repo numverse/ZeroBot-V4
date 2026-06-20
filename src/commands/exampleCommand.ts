@@ -1,5 +1,5 @@
-import { BotCommand } from "@/core/types/BotCommand";
-import { type CommandOptions } from "@/types/CommandOptions";
+import { BotCommand } from "~/core/types/BotCommand";
+import { type CommandOptions } from "~/types/CommandOptions";
 
 export class ExampleCommand extends BotCommand<CommandOptions> {
   constructor() {

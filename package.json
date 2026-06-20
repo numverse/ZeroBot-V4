@@ -1,25 +1,46 @@
 {
   "name": "zerobot-v4",
   "version": "4.0.0-dev",
-  "module": "src/index.ts",
-  "type": "module",
   "private": true,
+  "description": "",
+  "homepage": "https://github.com/numverse/ZeroBot-Next#readme",
+  "bugs": {
+    "url": "https://github.com/numverse/ZeroBot-Next/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/numverse/ZeroBot-Next.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "dependencies": {
+    "discord.js": "^14.25.1",
+    "dotenv": "^17.4.2"
+  },
+  "scripts" : {
+    "dev": "tsx --watch src/index.ts"
+  },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@stylistic/eslint-plugin": "^5.10.0",
-    "@types/bun": "latest",
-    "eslint": "^10.1.0",
+    "@types/node": "^26.0.0",
+    "eslint": "^10.5.0",
     "eslint-plugin-de-morgan": "^2.1.1",
     "eslint-plugin-import-newlines": "^2.0.0",
-    "eslint-plugin-sort-properties": "^1.1.13",
     "eslint-plugin-unicorn": "^63.0.0",
     "globals": "^17.4.0",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3",
     "typescript-eslint": "^8.57.2"
   },
   "peerDependencies": {
     "typescript": "^5.9.3"
   },
-  "dependencies": {
-    "discord.js": "^14.25.1"
+  "module": "src/index.ts",
+  "allowScripts": {
+    "esbuild@0.28.1": true,
+    "esbuild@0.27.7": true
   }
 }

@@ -1,5 +1,5 @@
 import { type ClientEvents } from "discord.js";
-import type Core from "@/core/Core";
+import type Core from "~/core/Core";
 
 export interface BotEvent<T extends keyof ClientEvents = keyof ClientEvents> {
   name: T;
